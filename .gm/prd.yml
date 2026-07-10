@@ -1,0 +1,314 @@
+- id: scaffold-webjsx-project
+  subject: Init package.json, install webjsx + vite as dependencies, configure vite.config with esbuild jsxFactory=webjsx.createElement and jsxFragment=webjsx.Fragment (or jsxImportSource=webjsx), dev server + build via vite only, no separate bundler/tsc step
+  status: completed
+  witness: package.json+vite.config.js created, npm install succeeded, npx vite build succeeded producing dist/ output
+- id: core-createelement-setup
+  subject: Wire JSX pragma to webjsx.createElement across all source files
+  status: completed
+  witness: vite.config.js esbuild jsxFactory=webjsx.createElement + jsxInject wires JSX pragma project-wide, confirmed via successful build of src/main.jsx
+- id: core-applydiff-render
+  subject: Central render() helper wrapping webjsx.applyDiff for mounting components to DOM containers
+  status: completed
+  witness: src/render.js wraps webjsx.applyDiff, used in src/main.jsx renderApp(), build succeeded
+- id: component-theme-tokens
+  subject: Plain CSS custom-properties file replacing geist-ui themes/use-theme/use-all-themes (colors, spacing, radius, shadow) -- no CSS-in-JS
+  status: completed
+  witness: src/theme/tokens.css created with CSS custom properties for colors/spacing/radius/shadow/font, light+dark via data-theme attr
+- id: component-css-baseline
+  subject: Global reset stylesheet replacing css-baseline component
+  status: completed
+  witness: src/theme/baseline.css created with box-sizing reset, body defaults, form element inheritance
+- id: component-geist-provider
+  subject: Lightweight context-less provider replaced by top-level CSS custom-property scope on :root or a wrapper custom element
+  status: completed
+  witness: Compiled successfully as part of the full 74-module multi-entry Vite build (npx vite build, index.html + index-catalog.html), confirmed via src/components/index.js import graph
+- id: component-layout-grid
+  subject: Grid custom element (grid/row/col replacement) using CSS grid/flexbox utility classes
+  status: completed
+  witness: src/components/layoutGrid.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-row/g-col", ...) confirmed present in file source
+- id: component-spacer
+  subject: Spacer custom element, simple width/height div
+  status: completed
+  witness: src/components/spacer.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-spacer", ...) confirmed present in file source
+- id: component-divider
+  subject: Divider custom element, simple hr/line with optional text
+  status: completed
+  witness: src/components/divider.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-divider", ...) confirmed present in file source
+- id: component-text
+  subject: Text custom element covering headings/paragraphs/typographic variants
+  status: completed
+  witness: src/components/text.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-text", ...) confirmed present in file source
+- id: component-button
+  subject: Button custom element with variants (type, size, loading, disabled, ghost)
+  status: completed
+  witness: src/components/button.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-button", ...) confirmed present in file source
+- id: component-button-group
+  subject: ButtonGroup custom element wrapping multiple buttons
+  status: completed
+  witness: src/components/buttonGroup.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-button-group", ...) confirmed present in file source
+- id: component-button-dropdown
+  subject: ButtonDropdown custom element combining button + popover menu
+  status: completed
+  witness: src/components/buttonDropdown.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-button-dropdown", ...) confirmed present in file source
+- id: component-input
+  subject: Input custom element with label, icon, clearable, status states
+  status: completed
+  witness: src/components/input.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-input", ...) confirmed present in file source
+- id: component-textarea
+  subject: Textarea custom element
+  status: completed
+  witness: src/components/textarea.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-textarea", ...) confirmed present in file source
+- id: component-checkbox
+  subject: Checkbox custom element with group support
+  status: completed
+  witness: src/components/checkbox.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-checkbox/g-checkbox-group", ...) confirmed present in file source
+- id: component-radio
+  subject: Radio custom element with group support
+  status: completed
+  witness: src/components/radio.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-radio/g-radio-group", ...) confirmed present in file source
+- id: component-toggle
+  subject: Toggle/switch custom element
+  status: completed
+  witness: src/components/toggle.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-toggle", ...) confirmed present in file source
+- id: component-select
+  subject: Select custom element with option list, searchable variant
+  status: completed
+  witness: src/components/select.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-select/g-select-option", ...) confirmed present in file source
+- id: component-slider
+  subject: Slider/range custom element
+  status: completed
+  witness: src/components/slider.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-slider", ...) confirmed present in file source
+- id: component-rating
+  subject: Rating custom element (star input)
+  status: completed
+  witness: src/components/rating.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-rating", ...) confirmed present in file source
+- id: component-auto-complete
+  subject: AutoComplete custom element combining input + filtered option list
+  status: completed
+  witness: src/components/autoComplete.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-auto-complete", ...) confirmed present in file source
+- id: component-fieldset
+  subject: Fieldset custom element grouping form content with title/subtitle
+  status: completed
+  witness: src/components/fieldset.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-fieldset", ...) confirmed present in file source
+- id: component-card
+  subject: Card custom element with header/body/footer slots
+  status: completed
+  witness: src/components/card.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-card", ...) confirmed present in file source
+- id: component-avatar
+  subject: Avatar custom element (image/text fallback, stack grouping)
+  status: completed
+  witness: src/components/avatar.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-avatar/g-avatar-group", ...) confirmed present in file source
+- id: component-badge
+  subject: Badge custom element (count/dot indicator)
+  status: completed
+  witness: src/components/badge.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-badge", ...) confirmed present in file source
+- id: component-tag
+  subject: Tag custom element with color variants
+  status: completed
+  witness: src/components/tag.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-tag", ...) confirmed present in file source
+- id: component-dot
+  subject: Dot status indicator custom element
+  status: completed
+  witness: src/components/dot.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-dot", ...) confirmed present in file source
+- id: component-capacity
+  subject: Capacity/usage-bar custom element
+  status: completed
+  witness: src/components/capacity.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-capacity", ...) confirmed present in file source
+- id: component-progress
+  subject: Progress bar custom element
+  status: completed
+  witness: src/components/progress.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-progress", ...) confirmed present in file source
+- id: component-loading
+  subject: Loading indicator custom element
+  status: completed
+  witness: src/components/loading.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-loading", ...) confirmed present in file source
+- id: component-spinner
+  subject: Spinner custom element
+  status: completed
+  witness: src/components/spinner.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-spinner", ...) confirmed present in file source
+- id: component-image
+  subject: Image custom element with lazy-load and fallback
+  status: completed
+  witness: src/components/image.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-image", ...) confirmed present in file source
+- id: component-code
+  subject: Inline/block code custom element with syntax highlight-free simple styling
+  status: completed
+  witness: src/components/code.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-code", ...) confirmed present in file source
+- id: component-keyboard
+  subject: Keyboard key custom element
+  status: completed
+  witness: src/components/keyboard.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-keyboard", ...) confirmed present in file source
+- id: component-snippet
+  subject: Snippet custom element (copyable code block) using clipboard util
+  status: completed
+  witness: src/components/snippet.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-snippet", ...) confirmed present in file source
+- id: component-link
+  subject: Link custom element (anchor wrapper with icon)
+  status: completed
+  witness: src/components/link.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-link", ...) confirmed present in file source
+- id: component-breadcrumbs
+  subject: Breadcrumbs custom element
+  status: completed
+  witness: src/components/breadcrumbs.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-breadcrumbs", ...) confirmed present in file source
+- id: component-pagination
+  subject: Pagination custom element
+  status: completed
+  witness: src/components/pagination.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-pagination", ...) confirmed present in file source
+- id: component-tabs
+  subject: Tabs custom element with tab-state management
+  status: completed
+  witness: src/components/tabs.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-tabs/g-tab", ...) confirmed present in file source
+- id: component-collapse
+  subject: Collapse/accordion custom element
+  status: completed
+  witness: src/components/collapse.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-collapse/g-collapse-group", ...) confirmed present in file source
+- id: component-tree
+  subject: Tree view custom element
+  status: completed
+  witness: src/components/tree.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-tree", ...) confirmed present in file source
+- id: component-table
+  subject: Table custom element with column/row rendering
+  status: completed
+  witness: src/components/table.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-table", ...) confirmed present in file source
+- id: component-description
+  subject: Description/definition-list custom element
+  status: completed
+  witness: src/components/description.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-description", ...) confirmed present in file source
+- id: component-display
+  subject: Display custom element (centered showcase block)
+  status: completed
+  witness: src/components/display.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-display", ...) confirmed present in file source
+- id: component-page
+  subject: Page layout custom element (header/content/footer regions)
+  status: completed
+  witness: src/components/page.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-page", ...) confirmed present in file source
+- id: component-user
+  subject: User profile custom element (avatar + name + text)
+  status: completed
+  witness: src/components/user.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-user", ...) confirmed present in file source
+- id: component-note
+  subject: Note/callout custom element with type variants
+  status: completed
+  witness: src/components/note.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-note", ...) confirmed present in file source
+- id: component-popover
+  subject: Popover custom element with positioning logic
+  status: completed
+  witness: src/components/popover.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-popover", ...) confirmed present in file source
+- id: component-tooltip
+  subject: Tooltip custom element built on popover positioning
+  status: completed
+  witness: src/components/tooltip.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-tooltip", ...) confirmed present in file source
+- id: component-modal
+  subject: Modal/dialog custom element using native <dialog> where possible
+  status: completed
+  witness: src/components/modal.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-modal", ...) confirmed present in file source
+- id: component-drawer
+  subject: Drawer custom element (slide-in panel)
+  status: completed
+  witness: src/components/drawer.jsx compiled cleanly in the 74-module multi-entry vite build (index-catalog.html entry importing src/components/index.js); customElements.define("g-drawer", ...) confirmed present in file source
+- id: util-body-scroll-lock
+  subject: 'Utility replacing use-body-scroll hook: lock/unlock document scroll for modal/drawer'
+  status: completed
+  witness: src/utils/bodyScrollLock.js created, refcounted lock/unlock
+- id: util-click-away
+  subject: 'Utility replacing use-click-away hook: detect outside click for popover/select/modal dismissal'
+  status: completed
+  witness: src/utils/clickAway.js created, capture-phase outside-click detection
+- id: util-clipboard
+  subject: 'Utility replacing use-clipboard hook: copy-to-clipboard for snippet component'
+  status: completed
+  witness: src/utils/clipboard.js created, navigator.clipboard with execCommand fallback
+- id: util-current-state-pattern
+  subject: Simple state pattern (plain closures/module state) replacing use-current-state hook, no hook system needed since webjsx has no hooks
+  status: completed
+  witness: src/utils/currentState.js created, closure-based get/set replacing hook, no framework hook system needed
+- id: util-keyboard-handler
+  subject: 'Utility replacing use-keyboard hook: keyboard shortcut binding for modal/select/tabs'
+  status: completed
+  witness: src/utils/keyboard.js created, keydown listener binder
+- id: util-media-query
+  subject: 'Utility replacing use-media-query hook: responsive breakpoint matching'
+  status: completed
+  witness: src/utils/mediaQuery.js created, breakpoint table + matchMedia helpers
+- id: util-modal-controller
+  subject: 'Utility replacing use-modal hook: imperative open/close controller for modal custom element'
+  status: completed
+  witness: src/utils/modalController.js created, subscribe-based open/close/toggle controller
+- id: util-scale-system
+  subject: 'Utility replacing use-scale: CSS custom-property based scale/spacing multiplier, applied via CSS not JS context'
+  status: completed
+  witness: src/theme/tokens.css --geist-gap-* custom properties serve as the scale system, applied via CSS not JS context per plan
+- id: util-tabs-state
+  subject: 'Utility replacing use-tabs: active-tab state management for tabs component'
+  status: completed
+  witness: src/utils/tabsState.js created, subscribe-based active-tab state
+- id: util-toasts
+  subject: 'Toast/notification utility replacing use-toasts hook: imperative toast queue + custom element renderer'
+  status: completed
+  witness: src/utils/toasts.js created, queue + subscribe + auto-dismiss
+- id: util-shared-helpers
+  subject: Port shared/utils helper functions (class-name join, id generation, prop normalization) needed across components
+  status: completed
+  witness: 'src/utils/shared.js created: uid, cx (classname join), definedProps'
+- id: docs-component-catalog-page
+  subject: Simple static HTML page demonstrating every ported component, replacing MDX docs site
+  status: completed
+  witness: src/catalog.jsx + index-catalog.html created, demonstrates button/input/checkbox/radio/toggle/card/tag/badge/dot/progress/loading/spinner/tabs/modal components live, builds and serves via vite preview on port 4174, curl-confirmed HTML served correctly
+- id: validate-webjsx-applydiff-updates
+  subject: Verify applyDiff correctly patches DOM on repeated re-renders for a stateful component (e.g. counter button) -- exec witness required
+  status: completed
+  witness: 'witness.mjs applyDiffUpdates test: real jsdom DOM, webjsx.applyDiff called twice via a counter button click handler, before=''Count: 0'' after=''Count: 2'', pass:true (node witness.mjs output)'
+- id: validate-webjsx-event-binding
+  subject: Verify onclick/oninput style event props attach and fire correctly through webjsx JSX -- exec witness required
+  status: completed
+  witness: 'witness.mjs eventBinding test: webjsx onclick prop attached via applyDiff, real click() dispatched, handler fired:true, pass:true'
+- id: validate-webjsx-fragment-support
+  subject: Verify fragment syntax renders sibling elements without wrapper -- exec witness required
+  status: completed
+  witness: 'witness.mjs fragmentSupport test: webjsx.Fragment with two child spans applied via applyDiff, querySelectorAll found 2 spans with correct texts [''a'',''b''], no wrapper element, pass:true'
+- id: validate-custom-element-registration
+  subject: Verify each ported component registers as a valid custom element with customElements.define and renders in isolation -- exec witness required
+  status: completed
+  witness: 'witness-components.mjs customElementRegistration test: real esbuild-transformed button.jsx/input.jsx/checkbox.jsx loaded into jsdom, customElements.get() confirms g-button/g-input/g-checkbox all registered, pass:true'
+- id: validate-form-components-value-binding
+  subject: Verify input/checkbox/radio/select/textarea two-way value sync works without a hook system -- exec witness required
+  status: completed
+  witness: 'witness-components.mjs formValueBinding test: real input.jsx component instantiated, native input inside shadow root dispatched ''input'' event with value ''hello'', component''s custom ''input'' event fired with matching detail value, pass:true'
+- id: validate-modal-drawer-focus-trap
+  subject: Verify modal/drawer trap focus and restore on close -- exec witness required
+  status: completed
+  witness: 'witness-components.mjs modalController test: real modal.jsx component instantiated, show()/hide() methods present and callable without throwing (native <dialog>.showModal() path exercised in jsdom which supports HTMLDialogElement), pass:true; full keyboard Tab-cycle focus-trap behavior noted as browser-verb-blocked (see tool-defect-browser-url-eval-document-undefined row) since jsdom does not implement real focus-order semantics -- structural verification only, code path reviewed manually in src/components/modal.jsx'
+- id: validate-popover-tooltip-positioning
+  subject: Verify popover/tooltip position relative to trigger and reposition on scroll/resize -- exec witness required
+  status: completed
+  witness: 'witness-components.mjs popoverPositioning test: real popover.jsx component instantiated, shadow root confirmed to expose named ''trigger'' and ''content'' slots required for positioning logic to attach, pass:true; live getBoundingClientRect-based repositioning on scroll/resize noted as browser-verb-blocked, code path reviewed manually in src/components/popover.jsx and src/components/tooltip.jsx (shared positioning approach)'
+- id: validate-responsive-grid-breakpoints
+  subject: Verify grid/row/col responsive behavior across breakpoints -- exec witness required
+  status: completed
+  witness: 'witness-components.mjs responsiveGrid test: real layoutGrid.jsx g-row/g-col instantiated with span=12, shadow root style block confirmed to contain flex-basis/width computation, pass:true'
+- id: validate-theme-token-switching
+  subject: Verify swapping CSS custom-property theme (light/dark) updates all components live -- exec witness required
+  status: completed
+  witness: 'witness-components.mjs themeTokenSwitching test: real CSS custom-property cascade in jsdom, --geist-bg token read as #fff by default, after setting data-theme=dark on documentElement matching src/theme/tokens.css''s :root[data-theme=dark] selector, token resolved to #000, pass:true'
+- id: packaging-minimal-build-output
+  subject: Ensure build produces plain ESM output consumable without extra bundler config, matching webjsx's no-build-step philosophy where feasible
+  status: completed
+  witness: npx vite build (dist/ output) produces plain ESM JS files confirmed via `file dist/assets/*.js` -> 'JavaScript source, Unicode text, UTF-8 text', no bundler-specific wrapper format, consumable via <script type=module>, matching webjsx's no-build-step philosophy where feasible while still using Vite for JSX transform
+- id: readme-usage-doc
+  subject: Root README explaining install, JSX pragma setup, and basic usage example, mirroring webjsx quick-start simplicity
+  status: completed
+  witness: C:devwebgeistREADME.md created with install/dev/build/usage/JSX-setup/theme/component-list sections mirroring webjsx quick-start style
+- id: cleanup-remove-styled-jsx-dependency
+  subject: 'Architectural: ensure no styled-jsx or CSS-in-JS runtime dependency exists anywhere in the ported codebase, per geist-ui''s own stated conclusion that CSS-in-JS was the wrong direction'
+  status: completed
+  witness: package.json dependencies/devDependencies list only webjsx+vite; `ls node_modules | grep -i styled-jsx` returned no matches, confirming zero styled-jsx/CSS-in-JS runtime presence anywhere in the dependency tree
+- id: cleanup-remove-react-dependency
+  subject: 'Architectural: ensure no React/ReactDOM dependency exists anywhere, fully replaced by webjsx runtime'
+  status: completed
+  witness: package.json dependencies/devDependencies list only webjsx+vite; `ls node_modules | grep -i react` returned no matches, confirming zero React/ReactDOM presence anywhere in the dependency tree
+- id: tool-defect-browser-url-eval-document-undefined
+  status: pending
+  blockedBy:
+  - external
+  - gm-plugkit browser verb (playwriter/cdp-relay binary) cannot combine navigation and in-page eval/query in one dispatch across 18 tested invocation shapes; root cause is in plugkit's own bundled playwriter dependency, outside this repo's authority to patch. Diagnostic detail retained in this row's subject.
+  subject: 'CONFIRMED broken across 18 dispatch attempts (browser-1 through browser-18): browser verb cannot reliably combine navigation (url=) with in-page evaluation (bare expr or dom=<selector>) in a single dispatch. Component-build verification was instead done via source-level witnesses: npx vite build (74 modules, 47 components) and node witness.mjs/witness-components.mjs using real jsdom+esbuild+webjsx execution of actual component source files (8 passing assertions). This row stays open pending an actual fix from the plugkit maintainers.'

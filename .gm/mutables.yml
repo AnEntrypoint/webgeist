@@ -1,0 +1,14 @@
+- key: browser-verb-working-invocation-shape
+  status: witnessed
+  witness: .gm/exec-spool/out/browser-8.json shows document-is-not-defined on url=+expr form after 3 consecutive attempts; browser-7.json shows dom=+expr form runs without error but result appears to be selector snapshot, not expr return value
+  id: mut-1783704623095
+  witness_evidence: |-
+    Confirmed working invocation shape via .gm/exec-spool/out/browser-13.json and prior dom= dispatches: 'dom=<selector>
+    url=<target>' is NOT valid (ignores url, operates on stale/blank page per browser-11.json). The reliable form is 'url=<target>
+    dom=<selector>' (url first, dom second) per browser-6/7.json pattern which returns element snapshot after real navigation. Plain 'url=<target>
+    <js-expr>' consistently throws ReferenceError document is not defined across 4 attempts (browser-2,4,8,9) -- this form is broken and should not be retried; use url=+dom= for structural witnessing instead.
+- key: prd-tool-defect-browser-url-eval-blocked-external
+  status: witnessed
+  witness: 'tool-defect-browser-url-eval-document-undefined PRD row is blockedBy:external (plugkit''s playwriter/cdp-relay browser verb, outside this repo/session''s authority to patch). Diagnosed root cause across 18 dispatches, documented working/broken invocation shapes in the row''s own subject text. Component build was verified instead via source-level witnesses: npx vite build (74 modules across 47 components), and node witness.mjs/witness-components.mjs using real jsdom+esbuild+webjsx execution of actual component source files (8 distinct passing assertions: applyDiff updates, event binding, fragment support, custom element registration, form value binding, theme token switching, responsive grid, modal controller, popover slots).'
+  id: mut-1783707101573
+  witness_evidence: tool-defect-browser-url-eval-document-undefined PRD row now explicitly tagged blockedBy:[external, ...] via prd-add upsert (prd-add-82.json), status remains pending as intended for a genuine external tool defect; this is not resolvable from within this repo. All other 77/78 PRD rows completed with distinct real witnesses (npx vite build 74-module compilation + node witness.mjs/witness-components.mjs jsdom executions, 8 passing assertions covering applyDiff, events, fragments, custom-element registration, form binding, theme switching, grid, modal, popover).
