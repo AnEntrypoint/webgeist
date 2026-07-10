@@ -63,6 +63,14 @@ app.innerHTML = `
   </section>
 
   <section>
+    <h2>Grid</h2>
+    <div style="display:flex;gap:8px;">
+      <g-grid xs="12" sm="6" md="4" style="background:var(--geist-border);padding:8px;">xs12 sm6 md4</g-grid>
+      <g-grid xs="12" sm="6" md="8" style="background:var(--geist-border);padding:8px;">xs12 sm6 md8</g-grid>
+    </div>
+  </section>
+
+  <section>
     <h2>Modal</h2>
     <g-button id="open-modal">Open modal</g-button>
     <g-modal id="demo-modal">

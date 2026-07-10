@@ -18,6 +18,7 @@ import "./dot.jsx";
 import "./drawer.jsx";
 import "./fieldset.jsx";
 import "./geistProvider.jsx";
+import "./grid.jsx";
 import "./image.jsx";
 import "./input.jsx";
 import "./keyboard.jsx";

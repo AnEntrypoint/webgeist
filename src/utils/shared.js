@@ -5,8 +5,26 @@ export function uid(prefix = "geist") {
   return `${prefix}-${uidCounter}`;
 }
 
-export function cx(...parts) {
-  return parts.filter(Boolean).join(" ");
+function classObjectToString(obj) {
+  let str = "";
+  for (const key in obj) {
+    if (!obj[key]) continue;
+    str = str ? `${str} ${key}` : key;
+  }
+  return str;
+}
+
+export function cx(...classNames) {
+  let classes = "";
+  for (const val of classNames) {
+    if (!val) continue;
+    if (typeof val === "object" && !Array.isArray(val)) {
+      classes += ` ${classObjectToString(val)}`;
+    } else {
+      classes += ` ${String(val).trim()}`;
+    }
+  }
+  return classes.trim();
 }
 
 export function definedProps(obj) {

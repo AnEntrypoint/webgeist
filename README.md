@@ -62,7 +62,7 @@ CSS custom properties in `src/theme/tokens.css` drive colors/spacing/radius/shad
 
 ## Components
 
-Layout: `g-row`/`g-col`, `g-spacer`, `g-divider`, `g-card`, `g-fieldset`, `g-page`.
+Layout: `g-row`/`g-col`, `g-grid`, `g-spacer`, `g-divider`, `g-card`, `g-fieldset`, `g-page`.
 Forms: `g-button`, `g-input`, `g-textarea`, `g-checkbox`, `g-radio`, `g-toggle`, `g-select`, `g-slider`, `g-rating`, `g-auto-complete`.
 Display: `g-text`, `g-avatar`, `g-badge`, `g-tag`, `g-dot`, `g-capacity`, `g-progress`, `g-loading`, `g-spinner`, `g-image`, `g-code`, `g-keyboard`, `g-snippet`, `g-user`, `g-note`, `g-description`, `g-display`.
 Navigation: `g-link`, `g-breadcrumbs`, `g-pagination`, `g-tabs`, `g-collapse`, `g-tree`, `g-table`.
