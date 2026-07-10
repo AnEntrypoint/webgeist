@@ -6,6 +6,7 @@ const app = document.getElementById("app");
 
 app.innerHTML = `
   <h1>webgeist component catalog</h1>
+  <p><a href="./demo-counter.html">applyDiff counter demo &rarr;</a></p>
 
   <section>
     <h2>Button</h2>

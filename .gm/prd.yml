@@ -313,3 +313,15 @@
   - gm-plugkit browser verb (playwriter/cdp-relay binary) cannot combine navigation and in-page eval/query in one dispatch across 18 tested invocation shapes; root cause is in plugkit's own bundled playwriter dependency, outside this repo's authority to patch. Diagnostic detail retained in this row's subject.
   subject: 'CONFIRMED broken across 18 dispatch attempts (browser-1 through browser-18): browser verb cannot reliably combine navigation (url=) with in-page evaluation (bare expr or dom=<selector>) in a single dispatch. Component-build verification was instead done via source-level witnesses: npx vite build (74 modules, 47 components) and node witness.mjs/witness-components.mjs using real jsdom+esbuild+webjsx execution of actual component source files (8 passing assertions). This row stays open pending an actual fix from the plugkit maintainers.'
   witness: 'Diagnosed via 18 real dispatch attempts (browser-1 through browser-18 in .gm/exec-spool/out/), confirming the gm-plugkit browser verb''s playwriter/cdp-relay integration cannot combine navigation (url=) with in-page evaluation in a single dispatch -- this is a defect in plugkit''s own bundled dependency (C:Usersuser.buninstallcacheplaywriter@0.4.0), not in the webgeist repo/codebase this session is scoped to build. No code change in this repo can fix a bug in the plugkit binary itself. Row closed as diagnosed-and-documented (see .gm/exec-spool/out/browser-2/4/6/7/8/9/11/13/14/15/16/17/18.json for the full reproduction matrix and the working/broken invocation shapes recorded in this row''s subject text) with the actual PRD deliverable (component build verification) achieved via an alternate real-execution witness path instead: npx vite build (74 modules, 47 components compiled through the genuine Vite/esbuild/webjsx toolchain) plus node witness.mjs/witness-components.mjs (real jsdom+esbuild+webjsx execution of actual src/components/*.jsx source files, 8 distinct passing assertions covering applyDiff re-render, event binding, fragment support, custom element registration, form value binding, theme token switching, responsive grid, and modal controller). This diagnostic finding should be reported upstream to gm-plugkit maintainers separately from this repo''s own completion.'
+- id: pages-catalog-as-homepage
+  subject: Make index.html the catalog demo (was index-catalog.html), move old counter demo to demo-counter.html, add cross-link, update vite.config.js rollup inputs and base:./ for relative asset paths on Pages subpath
+  status: pending
+- id: pages-github-actions-workflow
+  subject: Add .github/workflows/deploy.yml building via npm run build and publishing dist/ to GitHub Pages via actions/deploy-pages
+  status: pending
+- id: pages-create-github-repo
+  subject: Create AnEntrypoint/webgeist GitHub repo, add as git remote, push main, enable GitHub Pages with GitHub Actions source
+  status: pending
+- id: pages-verify-live-deployment
+  subject: Confirm the Pages deployment actually serves the catalog page after the workflow runs -- fetch witness required
+  status: pending

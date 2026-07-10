@@ -7,11 +7,12 @@ export default defineConfig({
     jsxFragment: "webjsx.Fragment",
     jsxInject: `import * as webjsx from "webjsx"`,
   },
+  base: "./",
   build: {
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
-        catalog: resolve(__dirname, "index-catalog.html"),
+        demoCounter: resolve(__dirname, "demo-counter.html"),
       },
     },
   },

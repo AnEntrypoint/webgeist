@@ -58,7 +58,7 @@ CSS custom properties in `src/theme/tokens.css` drive colors/spacing/radius/shad
 
 ## Catalog
 
-`index-catalog.html` demonstrates a subset of components live. Run `npm run dev` and open `/index-catalog.html`.
+`index.html` demonstrates a subset of components live — this is the site homepage. Run `npm run dev` and open `/`. A minimal `applyDiff` counter demo is at `/demo-counter.html`.
 
 ## Components
 
