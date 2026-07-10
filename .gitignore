@@ -9,6 +9,9 @@
 .gm/long-gap-retry-state
 .gm/turn-state.json
 .gm/residual-check-fired
+.gm/.gm-continue-count
+.gm/disciplines/codeinsight-manifest/
+.gm/disciplines/codeinsight-vec/
 
 node_modules/
 dist/
