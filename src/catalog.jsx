@@ -1,87 +1,60 @@
 import "./components/index.js";
 import "./theme/tokens.css";
 import "./theme/baseline.css";
+import "./theme/catalog.css";
+import { SECTIONS, GROUP_ORDER } from "./catalog-sections/index.js";
+
+const sectionModules = import.meta.glob("./catalog-sections/*.js", { eager: true });
+
+function moduleFor(id) {
+  return sectionModules[`./catalog-sections/${id}.js`];
+}
+
+function buildSidebar() {
+  const groups = GROUP_ORDER.map((group) => {
+    const items = SECTIONS.filter((s) => s.group === group);
+    if (!items.length) return "";
+    const links = items
+      .map((s) => `<li><a href="#${s.id}">${s.title}</a></li>`)
+      .join("");
+    return `<h4>${group}</h4><ul>${links}</ul>`;
+  }).join("");
+
+  return `
+    <aside class="catalog-sidebar">
+      <h1>webgeist</h1>
+      <p class="subtitle">geist-ui, ported to webjsx</p>
+      <a class="counter-link" href="./demo-counter.html">applyDiff counter demo &rarr;</a>
+      <nav>${groups}</nav>
+    </aside>
+  `;
+}
+
+function buildSections() {
+  return SECTIONS.map((s) => {
+    const mod = moduleFor(s.id);
+    const body = mod && mod.default ? mod.default() : `<p class="playground">No demo yet.</p>`;
+    return `
+      <section class="catalog-component-section" id="${s.id}">
+        <h2>${s.title}</h2>
+        ${body}
+      </section>
+    `;
+  }).join("");
+}
 
 const app = document.getElementById("app");
-
 app.innerHTML = `
-  <h1>webgeist component catalog</h1>
-  <p><a href="./demo-counter.html">applyDiff counter demo &rarr;</a></p>
-
-  <section>
-    <h2>Button</h2>
-    <g-button>Default</g-button>
-    <g-button type="secondary">Secondary</g-button>
-    <g-button type="success">Success</g-button>
-    <g-button loading>Loading</g-button>
-    <g-button disabled>Disabled</g-button>
-  </section>
-
-  <section>
-    <h2>Input</h2>
-    <g-input label="Name" placeholder="Type here" clearable></g-input>
-  </section>
-
-  <section>
-    <h2>Checkbox / Radio / Toggle</h2>
-    <g-checkbox>Accept</g-checkbox>
-    <g-radio-group>
-      <g-radio value="a">A</g-radio>
-      <g-radio value="b">B</g-radio>
-    </g-radio-group>
-    <g-toggle></g-toggle>
-  </section>
-
-  <section>
-    <h2>Card</h2>
-    <g-card>
-      <span slot="header">Card title</span>
-      Card body content
-    </g-card>
-  </section>
-
-  <section>
-    <h2>Tag / Badge / Dot</h2>
-    <g-tag>Default</g-tag>
-    <g-badge count="5"></g-badge>
-    <g-dot type="success"></g-dot>
-  </section>
-
-  <section>
-    <h2>Progress / Loading / Spinner</h2>
-    <g-progress value="60"></g-progress>
-    <g-loading></g-loading>
-    <g-spinner></g-spinner>
-  </section>
-
-  <section>
-    <h2>Tabs</h2>
-    <g-tabs>
-      <g-tab label="One">Panel one</g-tab>
-      <g-tab label="Two">Panel two</g-tab>
-    </g-tabs>
-  </section>
-
-  <section>
-    <h2>Grid</h2>
-    <div style="display:flex;gap:8px;">
-      <g-grid xs="12" sm="6" md="4" style="background:var(--geist-border);padding:8px;">xs12 sm6 md4</g-grid>
-      <g-grid xs="12" sm="6" md="8" style="background:var(--geist-border);padding:8px;">xs12 sm6 md8</g-grid>
-    </div>
-  </section>
-
-  <section>
-    <h2>Modal</h2>
-    <g-button id="open-modal">Open modal</g-button>
-    <g-modal id="demo-modal">
-      <span slot="header">Modal title</span>
-      Modal content
-    </g-modal>
-  </section>
+  <div class="catalog-layout">
+    ${buildSidebar()}
+    <main class="catalog-main">${buildSections()}</main>
+  </div>
 `;
 
-const openBtn = document.getElementById("open-modal");
-const modal = document.getElementById("demo-modal");
-if (openBtn && modal && typeof modal.show === "function") {
-  openBtn.addEventListener("click", () => modal.show());
+for (const s of SECTIONS) {
+  const mod = moduleFor(s.id);
+  if (mod && typeof mod.wire === "function") {
+    const container = document.getElementById(s.id);
+    if (container) mod.wire(container);
+  }
 }

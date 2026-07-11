@@ -353,3 +353,210 @@
   subject: 'git_finalize reported {pushed:true, sha:''d677ccd''} for the coverage-gap commit but origin/main remained at the prior commit 177df89 -- verified via git log origin/main vs local mismatch. A subsequent explicit git_push dispatch succeeded and actually updated origin/main. This is a second gm-plugkit tool defect (distinct from the earlier browser verb issue): git_finalize''s push step can report success without the push actually landing. Diagnosed this turn; workaround is to verify git log origin/main after every git_finalize before trusting pushed:true.'
   status: completed
   witness: 'Confirmed and worked around this turn: after git_finalize reported {pushed:true} for commit d677ccd, git log origin/main showed the prior commit 177df89 still at HEAD -- a real push-reporting defect. Workaround applied for all 3 subsequent pushes this turn (d677ccd, 9aed231, 5cfca0d): dispatch git_push explicitly, then independently verify via git log origin/main --oneline -1 matching git log --oneline -1 before trusting the push landed. All 3 verified matching. This defect is now a documented, repeatable finding for future sessions -- diagnosed as deep as reachable without access to gm-plugkit''s git_finalize internals'
+- id: mine-official-docs-source
+  subject: Fetch all 47 relevant MDX doc pages from geist-org/geist-ui pages/en-us/components/ (excludes icons.mdx which is a separate icon-library page, includes file-tree.mdx->tree and toast.mdx->toasts hook as reference) as the authoritative source of documented usage variants per component, to build a genuinely complete catalog instead of the current ~15-component hand-picked sampler
+  status: completed
+  witness: 6 parallel subagents fetched all 46 relevant MDX doc pages via gh api repos/geist-org/geist-ui/contents/pages/en-us/components/<slug>.mdx, extracted Playground blocks, cross-referenced against actual src/components/*.jsx source to only use real supported props. Resulted in 46 catalog-sections/*.js files with 2-6 demo variants each, replacing the prior ~15-component hand-picked sampler
+- id: catalog-restructure-sectioned-page
+  subject: Restructure src/catalog.jsx into a properly sectioned, navigable page (sidebar or grouped sections matching geist-ui's own General/Layout/Data Entry/Data Display/Feedback/Navigation grouping from each mdx meta.group field) instead of one flat scrolling list, since a complete 47-component demo needs real navigation
+  status: completed
+  witness: src/catalog.jsx rewritten to use src/catalog-sections/index.js SECTIONS+GROUP_ORDER metadata (46 entries grouped into General/Layout/Data Entry/Data Display/Feedback/Navigation/Surfaces/Others matching geist-ui's own mdx meta.group taxonomy, sampled directly from official docs), with import.meta.glob eager-loading every section module and rendering a sidebar+main layout via src/theme/catalog.css. npx vite build succeeded (126 modules)
+- id: catalog-per-component-section-auto-complete
+  subject: Add g-auto-complete demo section with variants mined from auto-complete.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/auto-complete.js created, mined from geist-org/geist-ui pages/en-us/components/auto-complete.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/autoComplete.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-avatar
+  subject: Add g-avatar/g-avatar-group demo section with variants mined from avatar.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/avatar.js created, mined from geist-org/geist-ui pages/en-us/components/avatar.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/avatar.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-badge
+  subject: Add g-badge demo section with variants mined from badge.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/badge.js created, mined from geist-org/geist-ui pages/en-us/components/badge.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/badge.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-breadcrumbs
+  subject: Add g-breadcrumbs demo section with variants mined from breadcrumbs.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/breadcrumbs.js created, mined from geist-org/geist-ui pages/en-us/components/breadcrumbs.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/breadcrumbs.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-button-dropdown
+  subject: Add g-button-dropdown demo section with variants mined from button-dropdown.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/button-dropdown.js created, mined from geist-org/geist-ui pages/en-us/components/button-dropdown.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/buttonDropdown.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-button-group
+  subject: Add g-button-group demo section with variants mined from button-group.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/button-group.js created, mined from geist-org/geist-ui pages/en-us/components/button-group.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/buttonGroup.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-button
+  subject: Add g-button demo section with variants mined from button.mdx playgrounds (types, sizes, ghost, loading, disabled, shadow)
+  status: completed
+  witness: src/catalog-sections/button.js created, mined from geist-org/geist-ui pages/en-us/components/button.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/button.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-capacity
+  subject: Add g-capacity demo section with variants mined from capacity.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/capacity.js created, mined from geist-org/geist-ui pages/en-us/components/capacity.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/capacity.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-card
+  subject: Add g-card demo section with variants mined from card.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/card.js created, mined from geist-org/geist-ui pages/en-us/components/card.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/card.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-checkbox
+  subject: Add g-checkbox demo section with variants mined from checkbox.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/checkbox.js created, mined from geist-org/geist-ui pages/en-us/components/checkbox.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/checkbox.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-code
+  subject: Add g-code demo section with variants mined from code.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/code.js created, mined from geist-org/geist-ui pages/en-us/components/code.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/code.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-collapse
+  subject: Add g-collapse demo section with variants mined from collapse.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/collapse.js created, mined from geist-org/geist-ui pages/en-us/components/collapse.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/collapse.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-description
+  subject: Add g-description demo section with variants mined from description.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/description.js created, mined from geist-org/geist-ui pages/en-us/components/description.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/description.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-display
+  subject: Add g-display demo section with variants mined from display.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/display.js created, mined from geist-org/geist-ui pages/en-us/components/display.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/display.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-divider
+  subject: Add g-divider demo section with variants mined from divider.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/divider.js created, mined from geist-org/geist-ui pages/en-us/components/divider.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/divider.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-dot
+  subject: Add g-dot demo section with variants mined from dot.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/dot.js created, mined from geist-org/geist-ui pages/en-us/components/dot.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/dot.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-drawer
+  subject: Add g-drawer demo section with variants mined from drawer.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/drawer.js created, mined from geist-org/geist-ui pages/en-us/components/drawer.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/drawer.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-fieldset
+  subject: Add g-fieldset demo section with variants mined from fieldset.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/fieldset.js created, mined from geist-org/geist-ui pages/en-us/components/fieldset.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/fieldset.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-grid
+  subject: Add g-grid demo section with variants mined from grid.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/grid.js created, mined from geist-org/geist-ui pages/en-us/components/grid.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/grid.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-image
+  subject: Add g-image demo section with variants mined from image.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/image.js created, mined from geist-org/geist-ui pages/en-us/components/image.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/image.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-input
+  subject: Add g-input demo section with variants mined from input.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/input.js created, mined from geist-org/geist-ui pages/en-us/components/input.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/input.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-keyboard
+  subject: Add g-keyboard demo section with variants mined from keyboard.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/keyboard.js created, mined from geist-org/geist-ui pages/en-us/components/keyboard.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/keyboard.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-link
+  subject: Add g-link demo section with variants mined from link.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/link.js created, mined from geist-org/geist-ui pages/en-us/components/link.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/link.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-loading
+  subject: Add g-loading demo section with variants mined from loading.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/loading.js created, mined from geist-org/geist-ui pages/en-us/components/loading.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/loading.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-modal
+  subject: Add g-modal demo section with variants mined from modal.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/modal.js created, mined from geist-org/geist-ui pages/en-us/components/modal.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/modal.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-note
+  subject: Add g-note demo section with variants mined from note.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/note.js created, mined from geist-org/geist-ui pages/en-us/components/note.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/note.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-page
+  subject: Add g-page demo section with variants mined from page.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/page.js created, mined from geist-org/geist-ui pages/en-us/components/page.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/page.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-pagination
+  subject: Add g-pagination demo section with variants mined from pagination.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/pagination.js created, mined from geist-org/geist-ui pages/en-us/components/pagination.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/pagination.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-popover
+  subject: Add g-popover demo section with variants mined from popover.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/popover.js created, mined from geist-org/geist-ui pages/en-us/components/popover.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/popover.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-progress
+  subject: Add g-progress demo section with variants mined from progress.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/progress.js created, mined from geist-org/geist-ui pages/en-us/components/progress.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/progress.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-radio
+  subject: Add g-radio demo section with variants mined from radio.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/radio.js created, mined from geist-org/geist-ui pages/en-us/components/radio.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/radio.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-rating
+  subject: Add g-rating demo section with variants mined from rating.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/rating.js created, mined from geist-org/geist-ui pages/en-us/components/rating.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/rating.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-select
+  subject: Add g-select demo section with variants mined from select.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/select.js created, mined from geist-org/geist-ui pages/en-us/components/select.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/select.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-slider
+  subject: Add g-slider demo section with variants mined from slider.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/slider.js created, mined from geist-org/geist-ui pages/en-us/components/slider.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/slider.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-snippet
+  subject: Add g-snippet demo section with variants mined from snippet.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/snippet.js created, mined from geist-org/geist-ui pages/en-us/components/snippet.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/snippet.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-spacer
+  subject: Add g-spacer demo section with variants mined from spacer.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/spacer.js created, mined from geist-org/geist-ui pages/en-us/components/spacer.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/spacer.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-spinner
+  subject: Add g-spinner demo section with variants mined from spinner.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/spinner.js created, mined from geist-org/geist-ui pages/en-us/components/spinner.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/spinner.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-table
+  subject: Add g-table demo section with variants mined from table.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/table.js created, mined from geist-org/geist-ui pages/en-us/components/table.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/table.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-tabs
+  subject: Add g-tabs demo section with variants mined from tabs.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/tabs.js created, mined from geist-org/geist-ui pages/en-us/components/tabs.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/tabs.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-tag
+  subject: Add g-tag demo section with variants mined from tag.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/tag.js created, mined from geist-org/geist-ui pages/en-us/components/tag.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/tag.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-text
+  subject: Add g-text demo section with variants mined from text.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/text.js created, mined from geist-org/geist-ui pages/en-us/components/text.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/text.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-textarea
+  subject: Add g-textarea demo section with variants mined from textarea.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/textarea.js created, mined from geist-org/geist-ui pages/en-us/components/textarea.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/textarea.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-toggle
+  subject: Add g-toggle demo section with variants mined from toggle.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/toggle.js created, mined from geist-org/geist-ui pages/en-us/components/toggle.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/toggle.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-tooltip
+  subject: Add g-tooltip demo section with variants mined from tooltip.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/tooltip.js created, mined from geist-org/geist-ui pages/en-us/components/tooltip.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/tooltip.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-tree
+  subject: Add g-tree demo section with variants mined from file-tree.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/tree.js created, mined from geist-org/geist-ui pages/en-us/components/tree.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/tree.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-per-component-section-user
+  subject: Add g-user demo section with variants mined from user.mdx playgrounds
+  status: completed
+  witness: src/catalog-sections/user.js created, mined from geist-org/geist-ui pages/en-us/components/user.mdx (or file-tree.mdx for tree, toast.mdx/use-toasts for toasts) via gh api, translated Playground examples to real g-* custom element markup checked against actual src/components/user.jsx source. witness-sections.mjs confirms this section's module loads, renders non-empty HTML, and wire() (if present) executes without error
+- id: catalog-toasts-demo-section
+  subject: Add a toasts demo section triggering src/utils/toasts.js pushToast with variants mirroring toast.mdx/hooks/use-toasts.mdx examples
+  status: completed
+  witness: 'src/catalog-sections/toasts.js created with wire() export consuming pushToast from src/utils/toasts.js, variants: Basic, Multiline, Type (success/warning/error). witness-sections.mjs confirmed this section''s module loads and wires without error'
+- id: catalog-nav-sidebar
+  subject: Add a sidebar/table-of-contents nav linking to every component section by id, grouped to mirror geist-ui's docs categories (General, Layout, Data Entry, Data Display, Feedback, Navigation, Surface, Other)
+  status: completed
+  witness: src/catalog.jsx buildSidebar() renders nav grouped by GROUP_ORDER (General, Layout, Data Entry, Data Display, Feedback, Navigation, Surfaces, Others) with anchor links to each of the 46 section ids, styled via src/theme/catalog.css .catalog-sidebar rules. Static bundle grep confirmed all 46 section ids present as href targets
+- id: verify-catalog-build-with-all-sections
+  subject: Full npx vite build + live jsdom witness confirming the expanded catalog page renders every one of the 47 component sections without runtime error
+  status: completed
+  witness: 'npx vite build succeeded (126 modules, dist/assets/main-FFFTigx-.js 159.30kB). node witness-sections.mjs performed real jsdom+esbuild execution of every one of the 47 (46 components + toasts) catalog-sections/*.js modules against actual src/components/*.jsx source: all 47 loaded, rendered non-empty HTML, and wire() functions (where present) executed without throwing -- 0 failures out of 47. Static bundle grep separately confirmed all 47 section ids present in the compiled ESM bundle (jsdom cannot execute type=module scripts, a documented permanent jsdom limitation, so this two-pronged static+logic witness substitutes for full in-browser execution per the already-diagnosed browser-verb tool defect)'
+- id: deploy-expanded-catalog-to-pages
+  subject: Commit, push, watch CI green, update .ci-validated for the expanded catalog deployment, verify live URL serves the new complete demo
+  status: pending
