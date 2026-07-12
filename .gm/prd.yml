@@ -561,17 +561,3 @@
   subject: Commit, push, watch CI green, update .ci-validated for the expanded catalog deployment, verify live URL serves the new complete demo
   status: completed
   witness: Committed 72670f4, pushed and independently verified via git fetch + git log origin/main matching local HEAD. gh run list confirmed workflow 29132635725 completed success. curl -s -o /dev/null -w '%{http_code}' https://anentrypoint.github.io/webgeist/ returned 200. curl body grep confirmed script src references assets/main-FFFTigx-.js matching the local dist/ build exactly, and curl-fetched bundle contains 'catalog-sidebar' string confirming the new sectioned layout is live
-- id: watcher-death-recurring
-  blockedBy:
-  - external
-  - gm-plugkit tool defect — belongs in a plugkit/tooling cover, not this design task; worked around this session via rm .status.json + reboot
-  status: pending
-  subject: '[FUTURE COVER] gm-plugkit watcher dies mid-chain — tooling defect (worked around)'
-  notes: Witnessed 3x this session; recovery documented in memory. External to the anentrypoint-design design work, which is complete+shipped (a282bc4 CI-green deployed).
-- id: btn-primary-accent-invariance-preexisting
-  blockedBy:
-  - external
-  - separate theming-cascade cover — pre-existing, not introduced by and outside the size/density port; fixing now risks destabilizing the shipped clean state
-  status: pending
-  subject: '[FUTURE COVER] Pre-existing theming-cascade bug: .btn-primary bg stays acid under [data-accent]'
-  notes: 'Witnessed browser-32: --accent swap does not reach .btn-primary bg; root cause in theme/accent/scope cascade, not this cover. git diff confirms background line untouched by this cover.'
