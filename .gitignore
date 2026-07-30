@@ -18,3 +18,4 @@ dist/
 
 # git-bash crash artifact (transient, produced by intermittent sh.exe crashes)
 sh.exe.stackdump
+config.bat
